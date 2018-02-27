@@ -1,21 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
-import * as BooksAPI from './BooksAPI'
 import BooksGrid from './BooksGrid'
+import PropTypes from 'prop-types';
 
 class SearchPage extends React.Component {
-    state = {
-        query: '',
-        books : []
-    };
-    onChange(value) {
-        this.setState({query: value.trim()});
-        if(value !== ''){
-            BooksAPI.search(value).then(books => this.setState({books}));
-        }
-    }
+
     render() {
-        const {query, books} = this.state;
+        const {query, books, updateShelf, onSearch} = this.props;
         return (
             <div className="search-books">
                 <div className="search-books-bar">
@@ -24,16 +15,21 @@ class SearchPage extends React.Component {
                         <input type="text"
                                placeholder="Search by title or author"
                                value={query}
-                               onChange={e => this.onChange(e.target.value)}/>
-
+                               onChange={onSearch}/>
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <BooksGrid books={books}/>
+                    <BooksGrid books={books} updateShelf={updateShelf}/>
                 </div>
             </div>
         )
     }
 }
 
+SearchPage.propTypes = {
+    query: PropTypes.string.isRequired,
+    books: PropTypes.array.isRequired,
+    updateShelf: PropTypes.func.isRequired,
+    onSearch: PropTypes.func.isRequired
+};
 export default SearchPage

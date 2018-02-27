@@ -17,6 +17,7 @@ class ShelfChanger extends React.Component {
         )
     }
 }
+
 ShelfChanger.propTypes = {
     updateShelf: PropTypes.func.isRequired
 };

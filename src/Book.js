@@ -1,12 +1,11 @@
 import React from 'react'
 import ShelfChanger from './ShelfChanger';
 import PropTypes from 'prop-types';
-import * as BooksAPI from './BooksAPI';
 
 class Book extends React.Component {
     updateShelf(value){
-        const {book} = this.props;
-        BooksAPI.update(book, value);
+        const {book, updateShelf} = this.props;
+        updateShelf(book, value);
     }
     render() {
         const {book} = this.props;
@@ -22,12 +21,14 @@ class Book extends React.Component {
                         <ShelfChanger updateShelf={this.updateShelf.bind(this)} value={book.shelf || 'none'}/>
                     </div>
                     <div className="book-title">{book.title}</div>
-                    {book.authors && book.authors.map(author => <div className="book-authors" key={author}>{author}</div>)}
+                    {book.authors && book.authors.map(author => <div className="book-authors"
+                                                                     key={author}>{author}</div>)}
                 </div>
             </li>
         )
     }
 }
+
 Book.propTypes = {
     book: PropTypes.object.isRequired
 };
